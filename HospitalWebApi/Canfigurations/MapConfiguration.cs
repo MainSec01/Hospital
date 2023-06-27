@@ -30,7 +30,7 @@ namespace RoboMarketApi.Canfigurations
             CreateMap<HealthyFoodAddDto, HealthyFood>().ReverseMap();
             CreateMap<InfirmaryAddDto, Infirmary>().ReverseMap();
             CreateMap<SymptomAddDto,  Symptom>().ReverseMap();
-            CreateMap<TreatmentMethodAddDto, treatmentMethod>().ReverseMap();
+            CreateMap<TreatmentMethodAddDto, TreatmentMethod>().ReverseMap();
         }
     }
 }

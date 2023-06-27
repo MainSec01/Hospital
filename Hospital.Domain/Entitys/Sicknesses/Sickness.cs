@@ -14,14 +14,14 @@ namespace Hospital.Domain.Entitys
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public IList<treatmentMethod> treatmentMethod { get; set; }
+        public IList<TreatmentMethod> TreatmentMethod { get; set; }
         public IList<DiseaseCause> DiseaseCause { get; set; }
         public IList<HealthyFood> HealthyFood { get; set; }
         public IList<Symptom> Symptom { get; set; }
 
         public Sickness()
         {
-            treatmentMethod = new List<treatmentMethod>();
+            TreatmentMethod = new List<TreatmentMethod>();
             DiseaseCause = new List<DiseaseCause>();
             HealthyFood = new List<HealthyFood>();
             Symptom = new List<Symptom>();

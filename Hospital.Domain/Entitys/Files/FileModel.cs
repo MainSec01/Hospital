@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Hospital.Domain.Commons;
+using Microsoft.AspNetCore.Http;
 
 namespace Hospital.Domain.Entitys
 {
-    public class FileModel
+    public class FileModel : Auditble
     {
         public string FileName { get; set; }
         public IFormFile formFile { get; set; }

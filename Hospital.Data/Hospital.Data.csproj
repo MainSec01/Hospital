@@ -7,20 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IRepsitory\IDiseaseCauseRepsitory\" />
-    <Folder Include="IRepsitory\IDoctorRepsitory\" />
-    <Folder Include="IRepsitory\IFileModelRepsitory\" />
-    <Folder Include="IRepsitory\IPictureRepsitory\" />
-    <Folder Include="IRepsitory\IResponseRepsitory\" />
-    <Folder Include="IRepsitory\IHealthyFoodRepsitory\" />
-    <Folder Include="IRepsitory\IHospitalRepsitory\" />
-    <Folder Include="IRepsitory\ISicknessRepsitory\" />
-    <Folder Include="IRepsitory\ISymptomRepsitory\" />
-    <Folder Include="IRepsitory\ITreatmentMethodRepsitory\" />
-    <Folder Include="Repsitory\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.8">
       <PrivateAssets>all</PrivateAssets>

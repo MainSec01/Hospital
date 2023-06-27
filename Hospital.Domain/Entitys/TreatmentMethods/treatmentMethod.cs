@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hospital.Domain.Entitys.TreatmentMethods
 {
-    public class treatmentMethod : Auditble
+    public class TreatmentMethod : Auditble
     {
         public string Name { get; set; }
     }
