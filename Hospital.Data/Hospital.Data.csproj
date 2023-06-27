@@ -7,7 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IRepsitory\" />
+    <Folder Include="IRepsitory\IDiseaseCauseRepsitory\" />
+    <Folder Include="IRepsitory\IDoctorRepsitory\" />
+    <Folder Include="IRepsitory\IFileModelRepsitory\" />
+    <Folder Include="IRepsitory\IPictureRepsitory\" />
+    <Folder Include="IRepsitory\IResponseRepsitory\" />
+    <Folder Include="IRepsitory\IHealthyFoodRepsitory\" />
+    <Folder Include="IRepsitory\IHospitalRepsitory\" />
+    <Folder Include="IRepsitory\ISicknessRepsitory\" />
+    <Folder Include="IRepsitory\ISymptomRepsitory\" />
+    <Folder Include="IRepsitory\ITreatmentMethodRepsitory\" />
     <Folder Include="Repsitory\" />
   </ItemGroup>
 
