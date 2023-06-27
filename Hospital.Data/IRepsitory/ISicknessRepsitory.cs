@@ -9,7 +9,7 @@ namespace Hospital.Data.IRepsitory
 {
     public interface ISicknessRepsitory
     {
-        public Task Add(Sickness autosalon);
+        public Task Add(Sickness sickness);
         public Task<IEnumerable<Sickness>> GetAll();
         public Task Update(int id, Sickness sickness);
         public Task Delete(int id);

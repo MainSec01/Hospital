@@ -18,7 +18,7 @@ namespace Hospital.Data.Repsitory
             this.dbContext = dbContext;
         }
 
-        public async Task Add(Sickness autosalon)
+        public async Task Add(Sickness sickness)
         {
             await dbContext.Sickness.ToListAsync();
             await dbContext.SaveChangesAsync();

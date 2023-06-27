@@ -19,9 +19,7 @@ namespace Hospital.Data.HospitalDBContext
 
         public DbSet<DiseaseCause> DiseaseCauses { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
-        //public DbSet<FileModel> FileModels { get; set; }
         public DbSet<Picture> Pictures { get; set; }
-        //public DbSet<Response> Responses { get; set; }
         public DbSet<HealthyFood> HealthyFoods { get; set; }
         public DbSet<Infirmary> Infirations { get; set; }
         public DbSet<Sickness> Sickness { get; set; }

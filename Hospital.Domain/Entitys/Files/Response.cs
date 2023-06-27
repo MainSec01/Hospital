@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hospital.Domain.Entitys
 {
-    public class Response : Auditble
+    public class Response
     {
         public int StatusCode { get; set; }
         public string ErrorMessage { get; set; }
