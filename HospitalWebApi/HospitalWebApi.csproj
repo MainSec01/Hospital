@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Hospital.Data\Hospital.Data.csproj" />
     <ProjectReference Include="..\Hospital.Domain\Hospital.Domain.csproj" />
     <ProjectReference Include="..\Hospital.Servise\Hospital.Servise.csproj" />
