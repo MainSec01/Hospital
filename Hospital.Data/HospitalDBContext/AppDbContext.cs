@@ -26,6 +26,6 @@ namespace Hospital.Data.HospitalDBContext
         public DbSet<Infirmary> Infirations { get; set; }
         public DbSet<Sickness> Sickness { get; set; }
         public DbSet<Symptom> Symptoms { get; set;}
-        public DbSet <TreatmentMethod> TreatmentMethods { get; set; }
+        public DbSet<TreatmentMethod> TreatmentMethods { get; set; }
     }
 }
