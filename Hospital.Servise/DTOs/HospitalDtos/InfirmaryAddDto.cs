@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hospital.Servise.DTOs.SicknesseDtos
+namespace Hospital.Servise.DTOs.HospitalDtos
 {
-    public class SicknesseAddDto
+    public class InfirmaryAddDto
     {
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string location { get; set; }
     }
 }

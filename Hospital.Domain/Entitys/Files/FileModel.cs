@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Hospital.Domain.Commons;
+using Microsoft.AspNetCore.Http;
 
 namespace Hospital.Domain.Entitys
 {
