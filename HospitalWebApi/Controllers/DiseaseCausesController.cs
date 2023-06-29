@@ -27,7 +27,6 @@ namespace HospitalWebApi.Controllers
 
             return BadRequest();
         }
-
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
