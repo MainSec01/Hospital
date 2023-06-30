@@ -12,7 +12,7 @@ namespace Hospital.Data.Repsitory
 {
     public class DiseaseCauseRepsitory : IDiseaseCauseRepsitory
     {
-        AppDbContext dbContext;
+        private readonly AppDbContext dbContext;
 
         public DiseaseCauseRepsitory(AppDbContext dbContext)
         {
@@ -25,17 +25,26 @@ namespace Hospital.Data.Repsitory
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(long id)
         {
-
+            var diseaseCause = await dbContext.DiseaseCauses.FindAsync(id);
+            dbContext.DiseaseCauses.Remove(diseaseCause);
+            await dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<DiseaseCause>> GetAll()=>
+        public async Task<IEnumerable<DiseaseCause>> GetAll() =>
             await dbContext.DiseaseCauses.ToListAsync();
 
-        public async Task Update(int id, DiseaseCause diseaseCause)
-        {
+        public async Task<DiseaseCause> GetById(long id) =>
+            await dbContext.DiseaseCauses.FindAsync(id);
 
+        public async Task Update(long id, DiseaseCause updatedDiseaseCause)
+        {
+            var diseaseCause = await dbContext.DiseaseCauses.FindAsync(id);
+            diseaseCause.Name = updatedDiseaseCause.Name;
+
+            await dbContext.SaveChangesAsync();
         }
     }
+
 }

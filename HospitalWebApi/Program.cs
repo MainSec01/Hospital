@@ -1,3 +1,5 @@
+using Hospital.Data.HospitalDBContext;
+using Microsoft.EntityFrameworkCore;
 using RoboMarketApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContexts(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
-
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddRepositories();
 builder.Services.AddService();

@@ -12,10 +12,10 @@ namespace Hospital.Servise.Servises
 {
     public class DoctorServise : IDoctorServise
     {
-        IDoctorRepsitory doctorRepsitory;
-        Mapper mapper;
+        private readonly IDoctorRepsitory doctorRepsitory;
+        private readonly IMapper mapper;
 
-        public DoctorServise(Mapper mapper, IDoctorRepsitory doctorRepsitory)
+        public DoctorServise(IMapper mapper, IDoctorRepsitory doctorRepsitory)
         {
             this.mapper = mapper;
             this.doctorRepsitory = doctorRepsitory;
@@ -27,15 +27,26 @@ namespace Hospital.Servise.Servises
             await doctorRepsitory.Add(doctor);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(long id)
         {
+            await doctorRepsitory.Delete(id);
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllAsync() =>
-            await doctorRepsitory.GetAll();
-
-        public async Task UpdateAsync(int id, DoctorAddDto doctorAddDto)
+        public async Task<IEnumerable<Doctor>> GetAllAsync()
         {
+            return await doctorRepsitory.GetAll();
+        }
+
+        public async Task UpdateAsync(long id, DoctorAddDto doctorAddDto)
+        {
+            var existingDoctor = await doctorRepsitory.GetById(id);
+
+            if (existingDoctor != null)
+            {
+                mapper.Map(doctorAddDto, existingDoctor);
+                await doctorRepsitory.Update(existingDoctor.Id, existingDoctor);
+            }
         }
     }
 }
+

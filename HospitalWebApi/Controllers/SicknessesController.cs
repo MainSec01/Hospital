@@ -9,7 +9,7 @@ namespace HospitalWebApi.Controllers
     [ApiController]
     public class SicknessesController : ControllerBase
     {
-        ISicknessServise sicknessServise;
+        private readonly ISicknessServise sicknessServise;
 
         public SicknessesController(ISicknessServise sicknessServise)
         {
@@ -22,7 +22,6 @@ namespace HospitalWebApi.Controllers
             if (sicknesseAddDto is not null)
             {
                 await sicknessServise.AddAsync(sicknesseAddDto);
-
                 return Ok();
             }
 
@@ -32,7 +31,23 @@ namespace HospitalWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await sicknessServise.GetAllAsync());
+            var sicknesses = await sicknessServise.GetAllAsync();
+            return Ok(sicknesses);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(long id, SicknesseAddDto sicknesseAddDto)
+        {
+            await sicknessServise.UpdateAsync(id, sicknesseAddDto);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(long id)
+        {
+            await sicknessServise.DeleteAsync(id);
+            return Ok();
         }
     }
+
 }

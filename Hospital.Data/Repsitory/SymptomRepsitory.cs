@@ -12,22 +12,51 @@ namespace Hospital.Data.Repsitory
 {
     public class SymptomRepsitory : ISymptomRepsitory
     {
-        AppDbContext dbContext;
+        private readonly AppDbContext dbContext;
+
+        public SymptomRepsitory(AppDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
         public async Task Add(Symptom symptom)
         {
             await dbContext.Symptoms.AddAsync(symptom);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(long id)
         {
+            var symptom = await dbContext.Symptoms.FindAsync(id);
+            if (symptom != null)
+            {
+                dbContext.Symptoms.Remove(symptom);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
-        public async Task<IEnumerable<Symptom>> GetAll() =>
-            await dbContext.Symptoms.ToListAsync();
-
-        public async Task Update(int id, Symptom symptom)
+        public async Task<IEnumerable<Symptom>> GetAll()
         {
+            return await dbContext.Symptoms.ToListAsync();
+        }
+
+        public async Task<Symptom> GetById(long id)
+        {
+            return await dbContext.Symptoms.FindAsync(id);
+        }
+
+        public async Task Update(long id, Symptom symptom)
+        {
+            var existingSymptom = await dbContext.Symptoms.FindAsync(id);
+            if (existingSymptom != null)
+            {
+                existingSymptom.Name = symptom.Name;
+                existingSymptom.sickness = symptom.sickness;
+                existingSymptom.UpdatedAt = DateTime.UtcNow;
+
+                await dbContext.SaveChangesAsync();
+            }
         }
     }
+
 }

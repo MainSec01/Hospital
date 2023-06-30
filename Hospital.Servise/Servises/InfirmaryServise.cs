@@ -8,34 +8,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hospital.Servise.Servises
+public class InfirmaryServise : IInfirmaryServise
 {
-    public class InfirmaryServise : IInfirmaryServise
+    private readonly IInfirmaryRepsitory infirmaryRepsitory;
+    private readonly IMapper mapper;
+
+    public InfirmaryServise(IMapper mapper, IInfirmaryRepsitory infirmaryRepsitory)
     {
-        IInfirmaryRepsitory infirmaryRepsitory;
-        IMapper mapper;
+        this.mapper = mapper;
+        this.infirmaryRepsitory = infirmaryRepsitory;
+    }
 
-        public InfirmaryServise(IMapper mapper, IInfirmaryRepsitory infirmaryRepsitory)
+    public async Task AddAsync(InfirmaryAddDto infirmaryAddDto)
+    {
+        var infirmary = mapper.Map<Infirmary>(infirmaryAddDto);
+        await infirmaryRepsitory.Add(infirmary);
+    }
+
+    public async Task DeleteAsync(long id)
+    {
+        await infirmaryRepsitory.Delete(id);
+    }
+
+    public async Task<IEnumerable<Infirmary>> GetAllAsync()
+    {
+        return await infirmaryRepsitory.GetAll();
+    }
+
+    public async Task UpdateAsync(long id, InfirmaryAddDto infirmaryAddDto)
+    {
+        var existingInfirmary = await infirmaryRepsitory.GetById(id);
+
+        if (existingInfirmary != null)
         {
-            this.mapper = mapper;
-            this.infirmaryRepsitory = infirmaryRepsitory;
-        }
+            mapper.Map(infirmaryAddDto, existingInfirmary);
 
-        public async Task AddAsync(InfirmaryAddDto infirmaryAddDto)
-        {
-            var infirmary = mapper.Map<Infirmary>(infirmaryAddDto);
-            await infirmaryRepsitory.Add(infirmary);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-        }
-
-        public async Task<IEnumerable<Infirmary>> GetAllAsync() =>
-            await infirmaryRepsitory.GetAll();
-
-        public async Task UpdateAsync(int id, InfirmaryAddDto infirmaryAddDto)
-        {
+            await infirmaryRepsitory.Update(existingInfirmary.Id, existingInfirmary);
         }
     }
 }
+

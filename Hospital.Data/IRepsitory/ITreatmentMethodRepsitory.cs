@@ -11,7 +11,8 @@ namespace Hospital.Data.IRepsitory
     {
         public Task Add(TreatmentMethod treatmentMethod);
         public Task<IEnumerable<TreatmentMethod>> GetAll();
-        public Task Update(int id, TreatmentMethod treatmentMethod);
-        public Task Delete(int id);
+        public Task Update(long id, TreatmentMethod treatmentMethod); 
+        public Task Delete(long id);
+        public Task<TreatmentMethod> GetById(long id);
     }
 }

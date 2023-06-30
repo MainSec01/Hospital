@@ -12,7 +12,7 @@ namespace Hospital.Data.Repsitory
 {
     public class DoctorRepsitory : IDoctorRepsitory
     {
-        AppDbContext dbContext;
+        private readonly AppDbContext dbContext;
 
         public DoctorRepsitory(AppDbContext dbContext)
         {
@@ -25,15 +25,40 @@ namespace Hospital.Data.Repsitory
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(long id)
         {
+            var doctor = await GetById(id);
+            if (doctor != null)
+            {
+                dbContext.Doctors.Remove(doctor);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
-        public async Task<IEnumerable<Doctor>> GetAll() =>
-            await dbContext.Doctors.ToListAsync();
-
-        public async Task Update(int id, Doctor doctor)
+        public async Task<IEnumerable<Doctor>> GetAll()
         {
+            return await dbContext.Doctors.ToListAsync();
+        }
+
+        public async Task<Doctor> GetById(long id)
+        {
+            return await dbContext.Doctors.FindAsync(id);
+        }
+
+        public async Task Update(long id, Doctor doctor)
+        {
+            var existingDoctor = await GetById(id);
+            if (existingDoctor != null)
+            {
+                existingDoctor.First_name = doctor.First_name;
+                existingDoctor.Last_name = doctor.Last_name;
+                existingDoctor.price = doctor.price;
+                existingDoctor.Worklocation = doctor.Worklocation;
+                existingDoctor.Direction = doctor.Direction;
+                existingDoctor.UpdatedAt = DateTime.UtcNow;
+                await dbContext.SaveChangesAsync();
+            }
         }
     }
+
 }

@@ -10,7 +10,7 @@ namespace HospitalWebApi.Controllers
     [ApiController]
     public class SymptomsController : ControllerBase
     {
-        ISymptomServise symptomServise;
+        private readonly ISymptomServise symptomServise;
 
         public SymptomsController(ISymptomServise symptomServise)
         {
@@ -23,7 +23,6 @@ namespace HospitalWebApi.Controllers
             if (symptomAddDto is not null)
             {
                 await symptomServise.AddAsync(symptomAddDto);
-
                 return Ok();
             }
 
@@ -33,7 +32,23 @@ namespace HospitalWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await symptomServise.GetAllAsync());
+            var symptoms = await symptomServise.GetAllAsync();
+            return Ok(symptoms);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(long id, SymptomAddDto symptomAddDto)
+        {
+            await symptomServise.UpdateAsync(id, symptomAddDto);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(long id)
+        {
+            await symptomServise.DeleteAsync(id);
+            return Ok();
         }
     }
+
 }

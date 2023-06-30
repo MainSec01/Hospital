@@ -12,8 +12,8 @@ namespace Hospital.Servise.Servises
 {
     public class HealthyFoodServise : IHealthyFoodServise
     {
-        IHealthyFoodRepsitory healthyFoodRepsitory;
-        IMapper mapper;
+        private readonly IHealthyFoodRepsitory healthyFoodRepsitory;
+        private readonly IMapper mapper;
 
         public HealthyFoodServise(IMapper mapper, IHealthyFoodRepsitory healthyFoodRepsitory)
         {
@@ -27,15 +27,26 @@ namespace Hospital.Servise.Servises
             await healthyFoodRepsitory.Add(healthyFood);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(long id)
         {
+            await healthyFoodRepsitory.Delete(id);
         }
 
-        public async Task<IEnumerable<HealthyFood>> GetAllAsync() =>
-            await healthyFoodRepsitory.GetAll();
-
-        public async Task UpdateAsync(int id, HealthyFoodAddDto healthyFoodAddDto)
+        public async Task<IEnumerable<HealthyFood>> GetAllAsync()
         {
+            return await healthyFoodRepsitory.GetAll();
+        }
+
+        public async Task UpdateAsync(long id, HealthyFoodAddDto healthyFoodAddDto)
+        {
+            var existingHealthyFood = await healthyFoodRepsitory.GetById(id);
+
+            if (existingHealthyFood != null)
+            {
+                mapper.Map(healthyFoodAddDto, existingHealthyFood);
+                await healthyFoodRepsitory.Update(id, existingHealthyFood);
+            }
         }
     }
 }
+

@@ -12,27 +12,50 @@ namespace Hospital.Data.Repsitory
 {
     public class HealthyFoodRepsitory : IHealthyFoodRepsitory
     {
-        AppDbContext dbContext;
+        private readonly AppDbContext dbContext;
+
         public HealthyFoodRepsitory(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public  async Task Add(HealthyFood healthyFood)
+        public async Task Add(HealthyFood healthyFood)
         {
             await dbContext.HealthyFoods.AddAsync(healthyFood);
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(long id)
         {
+            var healthyFood = await GetById(id);
+            if (healthyFood != null)
+            {
+                dbContext.HealthyFoods.Remove(healthyFood);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
-        public async Task<IEnumerable<HealthyFood>> GetAll() =>
-            await dbContext.HealthyFoods.ToListAsync();
-
-        public async Task Update(int id, HealthyFood healthyFood)
+        public async Task<IEnumerable<HealthyFood>> GetAll()
         {
+            return await dbContext.HealthyFoods.ToListAsync();
+        }
+
+        public async Task<HealthyFood> GetById(long id)
+        {
+            return await dbContext.HealthyFoods.FindAsync(id);
+        }
+
+        public async Task Update(long id, HealthyFood healthyFood)
+        {
+            var existingHealthyFood = await GetById(id);
+            if (existingHealthyFood != null)
+            {
+                existingHealthyFood.Name = healthyFood.Name;
+                // Update other properties as needed
+
+                await dbContext.SaveChangesAsync();
+            }
         }
     }
+
 }

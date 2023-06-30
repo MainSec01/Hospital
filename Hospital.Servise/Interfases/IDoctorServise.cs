@@ -12,7 +12,7 @@ namespace Hospital.Data.IRepsitory
     {
         public Task AddAsync(DoctorAddDto doctorAddDto);
         public Task<IEnumerable<Doctor>> GetAllAsync();
-        public Task UpdateAsync(int id, DoctorAddDto doctorAddDto);
-        public Task DeleteAsync(int id);
+        public Task UpdateAsync(long id, DoctorAddDto doctorAddDto);
+        public Task DeleteAsync(long id);
     }
 }
