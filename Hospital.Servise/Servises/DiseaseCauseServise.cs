@@ -13,8 +13,8 @@ namespace Hospital.Servise.Servises
 {
     public class DiseaseCauseServise : IDiseaseCauseServise
     {
-        IDiseaseCauseRepsitory diseaseCauseRepsitory;
-        IMapper mapper;
+        private readonly IDiseaseCauseRepsitory diseaseCauseRepsitory;
+        private readonly IMapper mapper;
 
         public DiseaseCauseServise(IMapper mapper, IDiseaseCauseRepsitory diseaseCauseRepsitory)
         {
@@ -28,15 +28,24 @@ namespace Hospital.Servise.Servises
             await diseaseCauseRepsitory.Add(diseaseCause);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(long id)
         {
+            await diseaseCauseRepsitory.Delete(id);
         }
 
-        public async Task<IEnumerable<DiseaseCause>> GetAllAsync() =>
-            await diseaseCauseRepsitory.GetAll();
-
-        public async Task UpdateAsync(int id, DiseaseCauseAddDto diseaseCauseAddDto)
+        public async Task<IEnumerable<DiseaseCause>> GetAllAsync()
         {
+            return await diseaseCauseRepsitory.GetAll();
+        }
+
+        public async Task UpdateAsync(long id, DiseaseCauseAddDto diseaseCauseAddDto)
+        {
+            var existingDiseaseCause = await diseaseCauseRepsitory.GetById(id);
+
+            mapper.Map(diseaseCauseAddDto, existingDiseaseCause);
+
+            await diseaseCauseRepsitory.Update(existingDiseaseCause.Id, existingDiseaseCause);
         }
     }
 }
+

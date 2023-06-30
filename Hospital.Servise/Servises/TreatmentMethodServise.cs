@@ -12,10 +12,10 @@ namespace Hospital.Servise.Servises
 {
     public class TreatmentMethodServise : ITreatmentMethodServise
     {
-        ITreatmentMethodRepsitory treatmentMethodRepsitory;
-        Mapper mapper;
+        private readonly ITreatmentMethodRepsitory treatmentMethodRepsitory;
+        private readonly IMapper mapper;
 
-        public TreatmentMethodServise(Mapper mapper, ITreatmentMethodRepsitory treatmentMethodRepsitory)
+        public TreatmentMethodServise(IMapper mapper, ITreatmentMethodRepsitory treatmentMethodRepsitory)
         {
             this.mapper = mapper;
             this.treatmentMethodRepsitory = treatmentMethodRepsitory;
@@ -27,15 +27,24 @@ namespace Hospital.Servise.Servises
             await treatmentMethodRepsitory.Add(treatmentMethod);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(long id)
         {
+            await treatmentMethodRepsitory.Delete(id);
         }
 
-        public async Task<IEnumerable<TreatmentMethod>> GetAllAsync() =>
-            await treatmentMethodRepsitory.GetAll();
-
-        public async Task UpdateAsync(int id, TreatmentMethodAddDto treatmentMethodAddDto)
+        public async Task<IEnumerable<TreatmentMethod>> GetAllAsync()
         {
+            return await treatmentMethodRepsitory.GetAll();
+        }
+
+        public async Task UpdateAsync(long id, TreatmentMethodAddDto treatmentMethodAddDto)
+        {
+            var existingTreatmentMethod = await treatmentMethodRepsitory.GetById(id);
+            if (existingTreatmentMethod != null)
+            {
+                var updatedTreatmentMethod = mapper.Map<TreatmentMethod>(treatmentMethodAddDto);
+                await treatmentMethodRepsitory.Update(id, updatedTreatmentMethod);
+            }
         }
     }
 }

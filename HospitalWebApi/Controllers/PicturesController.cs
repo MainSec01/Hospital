@@ -9,7 +9,7 @@ namespace HospitalWebApi.Controllers
     [ApiController]
     public class PicturesController : ControllerBase
     {
-        IPictureServise pictureServise;
+        private readonly IPictureServise pictureServise;
 
         public PicturesController(IPictureServise pictureServise)
         {
@@ -22,7 +22,6 @@ namespace HospitalWebApi.Controllers
             if (pictureAddDto is not null)
             {
                 await pictureServise.AddAsync(pictureAddDto);
-
                 return Ok();
             }
 
@@ -32,7 +31,23 @@ namespace HospitalWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await pictureServise.GetAllAsync());
+            var pictures = await pictureServise.GetAllAsync();
+            return Ok(pictures);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(long id, PictureAddDto pictureAddDto)
+        {
+            await pictureServise.UpdateAsync(id, pictureAddDto);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(long id)
+        {
+            await pictureServise.DeleteAsync(id);
+            return Ok();
         }
     }
+
 }

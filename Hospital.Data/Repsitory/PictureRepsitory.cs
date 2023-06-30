@@ -12,7 +12,8 @@ namespace Hospital.Data.Repsitory
 {
     public class PictureRepsitory : IPictureRepsitory
     {
-        AppDbContext dbContext;
+        private readonly AppDbContext dbContext;
+
         public PictureRepsitory(AppDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -24,16 +25,33 @@ namespace Hospital.Data.Repsitory
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(long id)
         {
+            var picture = await dbContext.Pictures.FindAsync(id);
+            if (picture != null)
+            {
+                dbContext.Pictures.Remove(picture);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<Picture>> GetAll() =>
             await dbContext.Pictures.ToListAsync();
 
-        public async Task Update(int id, Picture picture)
+        public async Task<Picture> GetById(long id) =>
+            await dbContext.Pictures.FindAsync(id);
+
+        public async Task Update(long id, Picture picture)
         {
-            throw new NotImplementedException();
+            var existingPicture = await dbContext.Pictures.FindAsync(id);
+            if (existingPicture != null)
+            {
+                existingPicture.FilePath = picture.FilePath;
+                existingPicture.FileName = picture.FileName;
+
+                await dbContext.SaveChangesAsync();
+            }
         }
     }
+
 }

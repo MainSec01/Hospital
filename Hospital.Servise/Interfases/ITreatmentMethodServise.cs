@@ -10,9 +10,9 @@ namespace Hospital.Data.IRepsitory
 {
     public interface ITreatmentMethodServise
     {
-       /* public Task AddAsync(TreatmentMethodAddDto treatmentMethodAddDto);
-        public Task<IEnumerable<TreatmentMethod>> GetAllAsync();
-        public Task UpdateAsync(int id, TreatmentMethodAddDto treatmentMethodAddDto);
-        public Task DeleteAsync(int id);*/
+        Task AddAsync(TreatmentMethodAddDto treatmentMethodAddDto);
+        Task DeleteAsync(long id);
+        Task<IEnumerable<TreatmentMethod>> GetAllAsync();
+        Task UpdateAsync(long id, TreatmentMethodAddDto treatmentMethodAddDto);
     }
 }

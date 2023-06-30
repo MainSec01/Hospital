@@ -11,7 +11,8 @@ namespace Hospital.Data.IRepsitory
     {
         public Task Add(Doctor doctor);
         public Task<IEnumerable<Doctor>> GetAll();
-        public Task Update(int id, Doctor doctor);
-        public Task Delete(int id);
+        public Task Update(long id, Doctor doctor);
+        public Task Delete(long id);
+        public Task<Doctor> GetById(long id);
     }
 }

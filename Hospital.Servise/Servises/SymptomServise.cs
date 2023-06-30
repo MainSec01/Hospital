@@ -8,34 +8,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hospital.Servise.Servises
+public class SymptomServise : ISymptomServise
 {
-    public class SymptomServise : ISymptomServise
+    private readonly ISymptomRepsitory symptomRepsitory;
+    private readonly IMapper mapper;
+
+    public SymptomServise(IMapper mapper, ISymptomRepsitory symptomRepsitory)
     {
-        ISymptomRepsitory symptomRepsitory;
-        IMapper mapper;
+        this.mapper = mapper;
+        this.symptomRepsitory = symptomRepsitory;
+    }
 
-        public SymptomServise(IMapper mapper, ISymptomRepsitory symptomRepsitory)
+    public async Task AddAsync(SymptomAddDto symptomAddDto)
+    {
+        var symptom = mapper.Map<Symptom>(symptomAddDto);
+        await symptomRepsitory.Add(symptom);
+    }
+
+    public async Task DeleteAsync(long id)
+    {
+        await symptomRepsitory.Delete(id);
+    }
+
+    public async Task<IEnumerable<Symptom>> GetAllAsync()
+    {
+        return await symptomRepsitory.GetAll();
+    }
+
+    public async Task UpdateAsync(long id, SymptomAddDto symptomAddDto)
+    {
+        var existingSymptom = await symptomRepsitory.GetById(id);
+        if (existingSymptom != null)
         {
-            this.mapper = mapper;
-            this.symptomRepsitory = symptomRepsitory;
-        }
-
-        public async Task AddAsync(SymptomAddDto symptomAddDto)
-        {
-            var symptom = mapper.Map<Symptom>(symptomAddDto);
-            await symptomRepsitory.Add(symptom);
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-        }
-
-        public async Task<IEnumerable<Symptom>> GetAllAsync() =>
-            await symptomRepsitory.GetAll();
-
-        public async Task UpdateAsync(int id, SymptomAddDto symptomAddDto)
-        {
+            mapper.Map(symptomAddDto, existingSymptom);
+            await symptomRepsitory.Update(id, existingSymptom);
         }
     }
 }
+
