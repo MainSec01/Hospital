@@ -33,6 +33,24 @@ namespace Hospital.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pictures",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FilePath = table.Column<string>(type: "text", nullable: false),
+                    FileName = table.Column<string>(type: "text", nullable: false),
+                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pictures", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sickness",
                 columns: table => new
                 {
@@ -92,7 +110,7 @@ namespace Hospital.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DiseaseCause",
+                name: "DiseaseCauses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -106,16 +124,16 @@ namespace Hospital.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DiseaseCause", x => x.Id);
+                    table.PrimaryKey("PK_DiseaseCauses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DiseaseCause_Sickness_SicknessId",
+                        name: "FK_DiseaseCauses_Sickness_SicknessId",
                         column: x => x.SicknessId,
                         principalTable: "Sickness",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "HealthyFood",
+                name: "HealthyFoods",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -129,16 +147,16 @@ namespace Hospital.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HealthyFood", x => x.Id);
+                    table.PrimaryKey("PK_HealthyFoods", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HealthyFood_Sickness_SicknessId",
+                        name: "FK_HealthyFoods_Sickness_SicknessId",
                         column: x => x.SicknessId,
                         principalTable: "Sickness",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "treatmentMethod",
+                name: "TreatmentMethods",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -152,9 +170,9 @@ namespace Hospital.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_treatmentMethod", x => x.Id);
+                    table.PrimaryKey("PK_TreatmentMethods", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_treatmentMethod_Sickness_SicknessId",
+                        name: "FK_TreatmentMethods_Sickness_SicknessId",
                         column: x => x.SicknessId,
                         principalTable: "Sickness",
                         principalColumn: "Id");
@@ -185,13 +203,13 @@ namespace Hospital.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DiseaseCause_SicknessId",
-                table: "DiseaseCause",
+                name: "IX_DiseaseCauses_SicknessId",
+                table: "DiseaseCauses",
                 column: "SicknessId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HealthyFood_SicknessId",
-                table: "HealthyFood",
+                name: "IX_HealthyFoods_SicknessId",
+                table: "HealthyFoods",
                 column: "SicknessId");
 
             migrationBuilder.CreateIndex(
@@ -205,8 +223,8 @@ namespace Hospital.Data.Migrations
                 column: "sicknessId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_treatmentMethod_SicknessId",
-                table: "treatmentMethod",
+                name: "IX_TreatmentMethods_SicknessId",
+                table: "TreatmentMethods",
                 column: "SicknessId");
         }
 
@@ -214,19 +232,22 @@ namespace Hospital.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DiseaseCause");
+                name: "DiseaseCauses");
 
             migrationBuilder.DropTable(
-                name: "HealthyFood");
+                name: "HealthyFoods");
 
             migrationBuilder.DropTable(
                 name: "Infirations");
 
             migrationBuilder.DropTable(
+                name: "Pictures");
+
+            migrationBuilder.DropTable(
                 name: "SicknessSymptom");
 
             migrationBuilder.DropTable(
-                name: "treatmentMethod");
+                name: "TreatmentMethods");
 
             migrationBuilder.DropTable(
                 name: "Doctors");

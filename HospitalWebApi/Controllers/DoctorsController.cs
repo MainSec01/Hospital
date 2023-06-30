@@ -9,11 +9,11 @@ namespace HospitalWebApi.Controllers
     [ApiController]
     public class DoctorsController : ControllerBase
     {
-        IDoctorServise doctorServise;
+        private readonly IDoctorServise servise;
 
-        public DoctorsController(IDoctorServise doctorServise)
+        public DoctorsController(IDoctorServise servise)
         {
-            this.doctorServise = doctorServise;
+            this.servise = servise;
         }
 
         [HttpPost]
@@ -21,8 +21,7 @@ namespace HospitalWebApi.Controllers
         {
             if (doctorAddDto is not null)
             {
-                await doctorServise.AddAsync(doctorAddDto);
-
+                await servise.AddAsync(doctorAddDto);
                 return Ok();
             }
 
@@ -32,7 +31,7 @@ namespace HospitalWebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await doctorServise.GetAllAsync());
+            return Ok(await servise.GetAllAsync());
         }
     }
 }

@@ -1,4 +1,8 @@
 ﻿using Hospital.Data.HospitalDBContext;
+using Hospital.Data.IRepsitory;
+using Hospital.Data.Repsitory;
+using Hospital.Servise.Servises;
+using HospitalWebApi.Controllers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -16,24 +20,25 @@ namespace RoboMarketApi.Service
 
         public static void AddService(this IServiceCollection services)
         {
-           /*services.AddTransient<IAuthManager, AuthManager>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IProducService, ProducService>();
-            services.AddTransient<IProductCategoryService, ProductCategoryService>();
-            services.AddTransient<ILocationCategoryService, LocationCategoryService>();
-            services.AddTransient<ILocationUserService, LocationUserService>();*/
+
+            //services.AddTransient<IDoctorRepsitory, DoctorRepsitory>();
+            services.AddTransient<IDiseaseCauseRepsitory, DiseaseCauseRepsitory>();
+            services.AddTransient<IHealthyFoodRepsitory, HealthyFoodRepsitory>();
+            services.AddTransient<IInfirmaryRepsitory, InfirmaryRepsitory>();
+            services.AddTransient<ISicknessRepsitory, SicknessRepsitory>();
+            services.AddTransient<ISymptomRepsitory, SymptomRepsitory>();
+           // services.AddTransient<ITreatmentMethodRepsitory, TreatmentMethodRepsitory>();
         }
 
         public static void AddRepositories(this IServiceCollection services)
         {
-            /*services.AddTransient<IUserRepositori, UserRepositori>();
-            services.AddTransient<IProductRepositori, ProductRepositori>();
-            services.AddTransient<IProductCategoryRepositori, ProductCategoryRepositori>();
-            services.AddTransient <ILocationUserRepositori, LocationUserRepositori>();
-            services.AddTransient<ILocationCategoryRepositori, LocationCategoryRepositori>();*/
+           // services.AddTransient<IDoctorServise, DoctorServise>();
+            services.AddTransient<IDiseaseCauseServise, DiseaseCauseServise>();
+            services.AddTransient<IHealthyFoodServise, HealthyFoodServise>();
+            services.AddTransient<IInfirmaryServise, InfirmaryServise>();
+            services.AddTransient<ISicknessServise, SicknessServise>();
+            services.AddTransient<ISymptomServise, SymptomServise>();
+           // services.AddTransient<ITreatmentMethodServise, TreatmentMethodServise>();
         }
-
-     
-        
     }
 }

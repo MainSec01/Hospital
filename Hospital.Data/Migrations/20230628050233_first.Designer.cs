@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hospital.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230626122729_first")]
+    [Migration("20230628050233_first")]
     partial class first
     {
         /// <inheritdoc />
@@ -57,7 +57,7 @@ namespace Hospital.Data.Migrations
 
                     b.HasIndex("SicknessId");
 
-                    b.ToTable("DiseaseCause");
+                    b.ToTable("DiseaseCauses");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entitys.Doctor", b =>
@@ -105,6 +105,40 @@ namespace Hospital.Data.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("Hospital.Domain.Entitys.Files.Picture", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("DeletedBy")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("UpdatedBy")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pictures");
+                });
+
             modelBuilder.Entity("Hospital.Domain.Entitys.HealthyFoods.HealthyFood", b =>
                 {
                     b.Property<Guid>("Id")
@@ -137,7 +171,7 @@ namespace Hospital.Data.Migrations
 
                     b.HasIndex("SicknessId");
 
-                    b.ToTable("HealthyFood");
+                    b.ToTable("HealthyFoods");
                 });
 
             modelBuilder.Entity("Hospital.Domain.Entitys.Hospitals.Infirmary", b =>
@@ -243,7 +277,7 @@ namespace Hospital.Data.Migrations
                     b.ToTable("Symptoms");
                 });
 
-            modelBuilder.Entity("Hospital.Domain.Entitys.TreatmentMethods.treatmentMethod", b =>
+            modelBuilder.Entity("Hospital.Domain.Entitys.TreatmentMethods.TreatmentMethod", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -275,7 +309,7 @@ namespace Hospital.Data.Migrations
 
                     b.HasIndex("SicknessId");
 
-                    b.ToTable("treatmentMethod");
+                    b.ToTable("TreatmentMethods");
                 });
 
             modelBuilder.Entity("SicknessSymptom", b =>
@@ -314,10 +348,10 @@ namespace Hospital.Data.Migrations
                         .HasForeignKey("DoctorId");
                 });
 
-            modelBuilder.Entity("Hospital.Domain.Entitys.TreatmentMethods.treatmentMethod", b =>
+            modelBuilder.Entity("Hospital.Domain.Entitys.TreatmentMethods.TreatmentMethod", b =>
                 {
                     b.HasOne("Hospital.Domain.Entitys.Sickness", null)
-                        .WithMany("treatmentMethod")
+                        .WithMany("TreatmentMethod")
                         .HasForeignKey("SicknessId");
                 });
 
@@ -347,7 +381,7 @@ namespace Hospital.Data.Migrations
 
                     b.Navigation("HealthyFood");
 
-                    b.Navigation("treatmentMethod");
+                    b.Navigation("TreatmentMethod");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,28 +11,5 @@ namespace HospitalWebApi.Controllers
     {
         ITreatmentMethodServise treatmentMethodServise;
 
-        public TreatmentMethodsController(ITreatmentMethodServise treatmentMethodServise)
-        {
-            this.treatmentMethodServise = treatmentMethodServise;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddAsync(TreatmentMethodAddDto treatmentMethodAddDto)
-        {
-            if (treatmentMethodAddDto is not null)
-            {
-                await treatmentMethodServise.AddAsync(treatmentMethodAddDto);
-
-                return Ok();
-            }
-
-            return BadRequest();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
-        {
-            return Ok(await treatmentMethodServise.GetAllAsync());
-        }
     }
 }

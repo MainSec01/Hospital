@@ -18,6 +18,7 @@ namespace Hospital.Domain.Entitys
         public IList<Infirmary> infirmaries { get; set; }
         public Doctor()
         {
+            infirmaries = new List<Infirmary>();
         }
     }
 }
